@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heerkirov.ssm.dao.OrderDao">
+
+    <!-- 为了返回list 类型而定义的returnMap -->
+    <resultMap type="Order" id="resultOrder">
+        <id column="id" property="id" />
+        <result column="create_time" property="createTime" />
+        <result column="status" property="status" />
+        <result column="price" property="price" />
+        <result column="user_id" property="userId"/>
+        <collection property="products" column="id" ofType="OrderProductRelation" select="com.heerkirov.ssm.dao.OrderProductDao.listByOrderId"/>
+    </resultMap>
+
+    <select id="listByUser" resultMap="resultOrder" parameterType="String">
+      SELECT * FROM `order` WHERE user_id = #{userId} AND status != 'cart' ORDER BY create_time DESC
+    </select>
+
+    <select id="listOfAll" resultMap="resultOrder">
+        SELECT * FROM `order` WHERE status != 'cart' ORDER BY create_time DESC
+    </select>
+
+    <select id="get" resultMap="resultOrder" parameterType="int">
+        SELECT * FROM `order` WHERE id = #{id} LIMIT 1
+    </select>
+
+    <select id="getByIdAndUser" resultMap="resultOrder">
+        SELECT * FROM `order` WHERE user_id = #{userId} AND status != 'cart' AND id = #{id} LIMIT 1
+    </select>
+
+    <select id="cartByUser" resultMap="resultOrder" parameterType="String">
+        SELECT * FROM `order` WHERE user_id = #{userId} AND status = 'cart' LIMIT 1
+    </select>
+
+    <insert id="add">
+        INSERT INTO `order`(user_id, status, create_time, price) VALUE(#{userId}, #{status}, NULL, 0)
+    </insert>
+
+    <insert id="addProduct">
+        INSERT INTO orderproductrelation(order_id, product_id, count) VALUE(#{orderId}, #{productId}, #{count})
+    </insert>
+
+    <update id="updateProduct">
+        UPDATE orderproductrelation SET count = #{count} WHERE order_id = #{orderId} AND product_id = #{productId}
+    </update>
+
+    <delete id="removeProduct">
+        DELETE FROM orderproductrelation WHERE order_id = #{orderId} AND product_id = #{productId}
+    </delete>
+
+    <update id="update" parameterType="Order">
+        UPDATE `order` SET create_time = #{createTime}, status = #{status}, price = #{price} WHERE id = #{id}
+    </update>
+
+</mapper>

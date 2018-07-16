@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heerkirov.ssm.dao.ProductDao">
+
+    <!-- 为了返回list 类型而定义的returnMap -->
+    <resultMap type="Product" id="resultProduct">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="price" property="price" />
+        <result column="discount" property="discount" />
+        <result column="sale" property="sale" />
+        <result column="stock" property="stock" />
+        <result column="description" property="description" />
+        <result column="useful" property="useful" />
+    </resultMap>
+
+    <select id="list" resultMap="resultProduct">
+        SELECT * FROM product WHERE useful ORDER BY id
+    </select>
+    <select id="getById" resultMap="resultProduct">
+        SELECT * FROM product WHERE useful AND id=#{id} LIMIT 1
+    </select>
+    <select id="listOfAll" resultMap="resultProduct">
+        SELECT * FROM product ORDER BY id
+    </select>
+    <select id="getByIdOfAll" resultMap="resultProduct">
+        SELECT * FROM product WHERE id=#{id} LIMIT 1
+    </select>
+    <insert id="add" parameterType="com.heerkirov.ssm.model.Product" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO product(name, price, discount, sale, stock, description, useful)
+        VALUE(#{name}, #{price}, #{discount}, #{sale}, #{stock}, #{description}, #{useful})
+    </insert>
+    <update id="update">
+        UPDATE product SET
+            name = #{name},
+            price=#{price},
+            discount=#{discount},
+            sale=#{sale},
+            stock=#{stock},
+            description=#{description},
+            useful=#{useful}
+        WHERE id=#{id}
+    </update>
+    <delete id="remove" parameterType="int">
+        DELETE FROM product WHERE id = #{id}
+    </delete>
+</mapper>

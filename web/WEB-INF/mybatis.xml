@@ -1,0 +1,24 @@
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias alias="User" type="com.heerkirov.ssm.model.User"/>
+        <typeAlias alias="Product" type="com.heerkirov.ssm.model.Product"/>
+        <typeAlias alias="Order" type="com.heerkirov.ssm.model.Order"/>
+        <typeAlias alias="OrderProductRelation" type="com.heerkirov.ssm.model.OrderProductRelation"/>
+    </typeAliases>
+    <!--<environments default="development">-->
+        <!--<environment id="development">-->
+            <!--<transactionManager type="JDBC"/>-->
+            <!--<dataSource type="POOLED">-->
+                <!--<property name="driver" value="com.mysql.jdbc.Driver"/>-->
+                <!--<property name="url" value="jdbc:mysql://localhost:3306/SSM"/>-->
+                <!--<property name="username" value="root"/>-->
+                <!--<property name="password" value="1234"/>-->
+            <!--</dataSource>-->
+        <!--</environment>-->
+    <!--</environments>-->
+    <!--<mappers>-->
+        <!--<mapper class="com.heerkirov.ssm.mapper.UserDao"/>-->
+    <!--</mappers>-->
+</configuration>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heerkirov.ssm.dao.OrderProductDao">
+    <resultMap type="OrderProductRelation" id="resultOrderProduct">
+        <id column="id" property="id" />
+        <result column="count" property="count"/>
+        <result column="order_id" property="orderId"/>
+        <association property="product" javaType="com.heerkirov.ssm.model.Product">
+            <id column="product__id" property="id" />
+            <result column="product__name" property="name" />
+            <result column="product__price" property="price" />
+            <result column="product__discount" property="discount" />
+            <result column="product__sale" property="sale" />
+            <result column="product__stock" property="stock" />
+            <result column="product__description" property="description" />
+        </association>
+    </resultMap>
+
+    <select id="get" resultMap="resultOrderProduct">
+        SELECT opr.id id, opr.count count, opr.order_id order_id,
+               product.id product__id,
+               product.name product__name,
+               product.price product__price,
+               product.discount product__discount,
+               product.sale product__sale,
+               product.stock product__stock,
+               product.description product__description
+        FROM orderproductrelation opr, product
+        WHERE opr.order_id = #{orderId} AND opr.product_id = product.id AND opr.product_id = #{productId} LIMIT 1
+    </select>
+
+    <select id="listByOrderId" resultMap="resultOrderProduct" parameterType="int">
+      SELECT opr.id id, opr.count count, opr.order_id order_id,
+          product.id product__id,
+          product.name product__name,
+          product.price product__price,
+          product.discount product__discount,
+          product.sale product__sale,
+          product.stock product__stock,
+          product.description product__description
+      FROM orderproductrelation opr, product
+      WHERE opr.order_id = #{orderId} AND opr.product_id = product.id
+    </select>
+
+</mapper>
