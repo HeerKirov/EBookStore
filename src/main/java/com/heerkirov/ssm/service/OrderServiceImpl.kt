@@ -161,6 +161,17 @@ class OrderServiceImpl(@Autowired private val orderDao: OrderDao,
         }else{
             return false
         }
+    }
 
+    override fun returnIt(id: Int): Boolean {
+        val user = session.getAttribute("user")!! as User
+        val order = orderDao.getByIdAndUser(user.id, id)!!
+        if(order.status == "complete") {
+            order.status = "returning"
+            orderDao.update(order)
+            return true
+        }else{
+            return false
+        }
     }
 }

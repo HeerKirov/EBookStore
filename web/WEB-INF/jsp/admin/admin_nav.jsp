@@ -9,6 +9,9 @@
             <a class="nav-link" href="<c:url value="/admin/product/list"/>">书单管理</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="<c:url value="/admin/user/list"/>">用户管理</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="<c:url value="/"/>">前台</a>
         </li>
         <c:if test="${user != null}">
@@ -36,7 +39,7 @@
             url: '<c:url value="/api/auth/logout"/>',
             method: 'POST',
             success: function () {
-                location.href = '<c:url value="/list"/>';
+                location.href = '<c:url value="/login"/>';
             }
         })
     }

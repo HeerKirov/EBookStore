@@ -36,6 +36,8 @@ class AdminWebController(@Autowired private val session: HttpSession,
     }
     @RequestMapping("/order/list")
     fun orderListPage() = ad{ "admin/orderList" }
+    @RequestMapping("/user/list")
+    fun userListPage() = ad{ "admin/userList" }
 
     @RequestMapping("")
     fun default() = ad { "redirect:/admin/order/list" }

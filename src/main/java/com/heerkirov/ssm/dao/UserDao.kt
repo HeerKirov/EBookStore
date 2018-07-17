@@ -9,4 +9,5 @@ interface UserDao{
     fun updatePassword(@Param("id")id: String, @Param("password") password: String)
     fun getById(id: String): User?
     fun update(obj: User)
+    fun listOfAll(): List<User>
 }

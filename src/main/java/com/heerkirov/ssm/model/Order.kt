@@ -9,6 +9,8 @@ import kotlin.collections.ArrayList
  * submitted 已经提交订单，等待发货
  * running 正在发货状态，等待收货
  * completed 订单已完成
+ * returning 正在退货
+ * returned 已退货
  */
 
 class Order(

@@ -14,14 +14,13 @@
         <result column="address" property="address" />
     </resultMap>
 
-    <!--<insert id="add" parameterType="com.heerkirov.ssm.model.User">-->
-        <!--INSERT INTO "user"(id, name, password) VALUES(#{id}, #{name}, #{password})-->
-    <!--</insert>-->
-
     <select id="getById" parameterType="String" resultMap="resultUser">
         SELECT * FROM user WHERE id=#{id} LIMIT 1
     </select>
-    <insert id="add" parameterType="com.heerkirov.ssm.model.User">
+    <select id="listOfAll" resultMap="resultUser">
+        SELECT * FROM user ORDER BY id ASC
+    </select>
+    <insert id="add" parameterType="User">
         INSERT INTO user(id, name, password, salt, is_admin, phone, address)
         VALUE(#{id}, #{name}, #{password}, #{salt}, #{isAdmin}, #{phone}, #{address})
     </insert>

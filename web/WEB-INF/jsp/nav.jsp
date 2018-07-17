@@ -41,7 +41,7 @@
             url: '<c:url value="/api/auth/logout"/>',
             method: 'POST',
             success: function () {
-                location.href = '<c:url value="/list"/>';
+                location.href = '<c:url value="/login"/>';
             }
         })
     }

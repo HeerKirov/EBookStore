@@ -32,4 +32,9 @@ class AdminOrderController(@Autowired private val request: HttpServletRequest,
         adminOrderService.changeStatus(id.toInt(), "running")
         mapOf("success" to true)
     }
+    @PostMapping("/return/{id}")
+    fun checkReturn(@PathVariable id: String) = ad {
+        adminOrderService.changeStatus(id.toInt(), "returned")
+        mapOf("success" to true)
+    }
 }

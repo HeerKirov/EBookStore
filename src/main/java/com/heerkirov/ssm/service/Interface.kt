@@ -51,6 +51,8 @@ interface OrderService {
     fun get(id: Int): Order?
 
     fun complete(id: Int): Boolean
+
+    fun returnIt(id: Int): Boolean
 }
 
 @Service
@@ -70,5 +72,13 @@ interface AdminProductService {
     fun get(id: Int): Product?
 
     fun remove(id: Int): Boolean
+}
+@Service
+interface AdminUserService {
+    fun list(): List<User>
+
+    fun get(id: String): User?
+
+    fun updatePassword(id: String, newPassword: String): Boolean
 }
 

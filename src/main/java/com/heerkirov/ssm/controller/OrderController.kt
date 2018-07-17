@@ -46,5 +46,10 @@ class OrderController(@Autowired private val request: HttpServletRequest,
         val result = orderService.complete(id.toInt())
         return mapOf("success" to result)
     }
+    @PostMapping("/{id}/return") @ResponseBody
+    fun returnIt(@PathVariable id: String): Any {
+        val result = orderService.returnIt(id.toInt())
+        return mapOf("success" to result)
+    }
 
 }

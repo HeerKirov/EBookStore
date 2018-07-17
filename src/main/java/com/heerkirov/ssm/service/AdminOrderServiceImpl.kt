@@ -13,7 +13,8 @@ class AdminOrderServiceImpl(@Autowired private val orderDao: OrderDao) : AdminOr
 
     override fun changeStatus(id: Int, status: String): Order {
         val order = orderDao.get(id)!!
-        if(order.status == "submitted") {
+        if((order.status == "submitted" && status == "running")||
+                (order.status == "returning" && status == "returned")) {
             order.status = status
             orderDao.update(order)
         }

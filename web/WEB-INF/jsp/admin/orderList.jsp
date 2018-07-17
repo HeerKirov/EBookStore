@@ -42,6 +42,7 @@
                     <td>{{item.userId}}</td>
                     <td>
                         <button class="btn btn-info" v-if="item.status == 'submitted'" v-on:click="complete(item.id)">执行发货</button>
+                        <button class="btn btn-alert" v-if="item.status == 'returning'" v-on:click="returnIt(item.id)">确认退货完成</button>
                     </td>
                 </tr>
                 </tbody>
@@ -83,11 +84,32 @@
                     })
                 }
             },
+            returnIt: function(id) {
+                if(confirm("确认已经收到该订单的退货？")) {
+                    $.ajax({
+                        url: '/api/admin/order/return/' + id,
+                        method: 'POST',
+                        success: function (ret) {
+                            if(ret["success"]) {
+                                alert("确认退货成功！");
+                                vm.refresh();
+                            }else{
+                                alert("发生了意料之外的错误。");
+                            }
+                        },
+                        error: function () {
+                            alert("发生了意料之外的错误。");
+                        }
+                    })
+                }
+            },
             getStatusName: function(flag) {
                 if(flag === "cart") return "购物车";
                 else if(flag === "submitted") return "等待发货";
                 else if(flag === "running") return "等待收货";
                 else if(flag === "complete") return "已完成";
+                else if(flag === "returning") return "正在退货";
+                else if(flag === "returned") return "已退货";
                 else return "未知状态";
             },
             getDateTime: function(ms) {

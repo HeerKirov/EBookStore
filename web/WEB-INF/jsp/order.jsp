@@ -40,6 +40,7 @@
                             <td>{{getDateTime(item.createTime)}}</td>
                             <td>
                                 <button class="btn btn-info" v-if="item.status == 'running'" v-on:click="complete(item.id)">确认收货</button>
+                                <button class="btn btn-link" v-if="item.status == 'complete'" v-on:click="returnIt(item.id)">退货</button>
                             </td>
                         </tr>
                   </tbody>
@@ -63,7 +64,26 @@
                         method: 'POST',
                         success: function (ret) {
                             if(ret["success"]) {
-                                alert("确认收获成功！");
+                                alert("确认收货成功！");
+                                vm.refresh();
+                            }else{
+                                alert("发生了意料之外的错误。");
+                            }
+                        },
+                        error: function () {
+                            alert("发生了意料之外的错误。");
+                        }
+                    })
+                }
+            },
+            returnIt: function(id) {
+                if(confirm("您确认执行退货操作吗？")) {
+                    $.ajax({
+                        url: '/api/order/' + id + '/return',
+                        method: 'POST',
+                        success: function (ret) {
+                            if(ret["success"]) {
+                                alert("已经提出了退货申请！");
                                 vm.refresh();
                             }else{
                                 alert("发生了意料之外的错误。");
@@ -80,6 +100,8 @@
                 else if(flag === "submitted") return "等待发货";
                 else if(flag === "running") return "等待收货";
                 else if(flag === "complete") return "已完成";
+                else if(flag === "returning") return "正在退货";
+                else if(flag === "returned") return "已退货";
                 else return "未知状态";
             },
             getDateTime: function(ms) {
